@@ -1,0 +1,43 @@
+import React, { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
+const Home = () => {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    loadUsers();
+  }, []);
+  const loadUsers = async () => {
+    const result = await axios.get("http://localhost:8080/users");
+    setUsers(result.data)
+    console.log(users)
+  };
+
+  return (
+    <div className="container">
+      <div className="py-4">
+        <table className="table border shadow">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+              <th scope="col">Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user, index) => {
+              <tr>
+                <th scope="row" key= {index}>{index+1}</th>
+                <td>users.name</td>
+                <td>users.username</td>
+                <td>users.email</td>
+              </tr>;
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default Home;
